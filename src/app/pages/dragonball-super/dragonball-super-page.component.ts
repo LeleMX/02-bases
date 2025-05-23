@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { CharacterListComponent } from "../../components/dragonball/character-list/character-list.component";
-import { CharacterAddComponent } from "../../components/dragonball/character-add/character-add.component";
+import { Component, inject, signal } from '@angular/core';
+import { CharacterListComponent } from '../../components/dragonball/character-list/character-list.component';
+import { CharacterAddComponent } from '../../components/dragonball/character-add/character-add.component';
+import { DragonballService } from '../../services/dragonball.service';
 
 interface Character {
   id: number;
@@ -9,52 +10,23 @@ interface Character {
 }
 
 @Component({
-  imports: [
-    CharacterListComponent,
-    CharacterAddComponent
-],
+  imports: [CharacterListComponent, CharacterAddComponent],
   templateUrl: './dragonball-super-page.component.html',
-  selector: 'dragonball-super'
+  selector: 'dragonball-super',
 })
 export class DragonBallSuperPageComponent {
+  // constructor(public dragonballService: DragonballService) { }
+  public dragonballService = inject(DragonballService);
 
-  name = signal('');
-  power = signal(0);
-
-
-  characters = signal<Character[]>([
-    { id: 1, name: 'Goku', power: 9001 },
-    { id: 2, name: 'Vegeta', power: 800 },
-    // { id: 3, name: 'Piccolo', power: 3000 },
-    // { id: 4, name: 'Yamcha', power: 500 },
-  ])
-
-  addCharacter() {
-    if (!this.name() || !this.power() || this.power() <= 0) {
-      return;
-    }
-
-    const newCharacter: Character = {
-      // id: this.characters().length + 1,
-      id: 300,
-      name: this.name(),
-      power: this.power()
-    };
-
-    // this.characters.update(
-    //   (list) => [...list, newCharacter]
-    // );
-
-    console.log({newCharacter});
-
-    // this.resetFields();
-  }
-
-  resetFields() {
-    this.name.set('');
-    this.power.set(0);
-  }
-
+  // characters = signal<Character[]>([
+  //   { id: 1, name: 'Goku', power: 9001 },
+  //   { id: 2, name: 'Vegeta', power: 800 },
+  //   // { id: 3, name: 'Piccolo', power: 3000 },
+  //   // { id: 4, name: 'Yamcha', power: 500 },
+  // ]);
+  // addCharacter(newCharacter: Character) {
+  //   this.characters.update((list) => [...list, newCharacter]);
+  // }
   // powerClasses = computed(() => {
   //   return {
   //     'text-danger': true
